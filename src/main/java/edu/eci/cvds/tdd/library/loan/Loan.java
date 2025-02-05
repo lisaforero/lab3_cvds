@@ -12,6 +12,8 @@ public class Loan {
     private LoanStatus status;
     private LocalDateTime returnDate;
 
+    public Loan(){}
+
     public Book getBook() {
         return book;
     }
