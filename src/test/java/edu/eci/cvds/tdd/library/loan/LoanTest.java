@@ -1,4 +1,4 @@
 package edu.eci.cvds.tdd.library.book;
 
-public class Clasetest {
+public class LoanTest {
 }

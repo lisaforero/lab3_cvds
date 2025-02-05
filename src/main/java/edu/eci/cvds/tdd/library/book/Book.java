@@ -4,7 +4,7 @@ package edu.eci.cvds.tdd;
  * Hello world!
  *
  */
-public class App 
+public class Book
 {
     public static void main( String[] args )
     {
