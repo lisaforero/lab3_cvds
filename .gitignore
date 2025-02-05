@@ -1,0 +1,10 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+
+# Ignorar la carpeta de configuración de IntelliJ
+.idea/
+
+# Ignorar archivos específicos de IntelliJ
+*.iml
+out/
