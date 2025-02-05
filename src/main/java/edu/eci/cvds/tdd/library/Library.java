@@ -15,7 +15,7 @@ import java.util.Map;
 public class Library {
 
     private final List<User> users;
-    private final Map<Book, Integer> books;
+    private final Map<String, Book> books;
     private final List<Loan> loans;
 
     public Library() {
@@ -25,8 +25,8 @@ public class Library {
     }
 
     /**
-     * Adds a new {@link edu.eci.cvds.tdd.library.book.Book} into the system, the book is store in a Map that contains
-     * the {@link edu.eci.cvds.tdd.library.book.Book} and the amount of books available, if the book already exist the
+     * Adds a new {@link Book} into the system, the book is store in a Map that contains
+     * the {@link Book} and the amount of books available, if the book already exist the
      * amount should increase by 1 and if the book is new the amount should be 1, this method returns true if the
      * operation is successful false otherwise.
      *
@@ -35,8 +35,12 @@ public class Library {
      * @return true if the book was stored false otherwise.
      */
     public boolean addBook(Book book) {
-        //TODO Implement the logic to add a new book into the map.
-        return false;
+        if (books.containsKey(book.getIsbn())){
+            System.out.print("Ya existe un libro con ese Isbn");
+            return false;
+        }
+        books.put(book.getIsbn(),book);
+        return true;
     }
 
     /**
