@@ -1,13 +1,30 @@
-package edu.eci.cvds.tdd;
+package edu.eci.cvds.tdd.library.book;
 
-/**
- * Hello world!
- *
- */
-public class Book
-{
-    public static void main( String[] args )
-    {
-        System.out.println( "Hello World!" );
+public class Book {
+    private final String tittle;
+    private final String author;
+    private final String isbn;
+
+    public Book(String tittle, String author, String isbn) {
+        this.tittle = tittle;
+        this.author = author;
+        this.isbn = isbn;
+    }
+
+    public String getTittle() {
+        return tittle;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return isbn.equals(((Book)obj).isbn);
     }
 }
