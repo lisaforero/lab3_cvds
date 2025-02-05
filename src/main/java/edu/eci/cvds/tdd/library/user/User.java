@@ -4,6 +4,9 @@ public class User {
     private String name;
     private String id;
 
+    public User(String name, String id) {
+    }
+
     public String getName() {
         return name;
     }
