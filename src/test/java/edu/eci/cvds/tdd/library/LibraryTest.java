@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
 public class LibraryTest {
 
     private Library library;
@@ -158,5 +157,11 @@ public class LibraryTest {
         newUser.setId("789");
         newUser.setName("Usuario3");
         assertTrue(library.addUser(newUser));
+    }
+
+    @Test
+    public void testLoanABook_BookDoesNotExist() {
+        Loan loan = library.loanABook(user1.getId(), "NonExistingISBN");
+        assertNull(loan);
     }
 }
