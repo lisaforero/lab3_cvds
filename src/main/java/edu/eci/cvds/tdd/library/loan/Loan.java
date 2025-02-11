@@ -18,6 +18,8 @@ public class Loan {
         return book;
     }
 
+    public String getIsbn(){ return getBook().getIsbn();}
+
     public void setBook(Book book) {
         this.book = book;
     }

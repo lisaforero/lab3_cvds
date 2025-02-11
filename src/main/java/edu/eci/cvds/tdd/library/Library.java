@@ -2,8 +2,10 @@ package edu.eci.cvds.tdd.library;
 
 import edu.eci.cvds.tdd.library.book.Book;
 import edu.eci.cvds.tdd.library.loan.Loan;
+import edu.eci.cvds.tdd.library.loan.LoanStatus;
 import edu.eci.cvds.tdd.library.user.User;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -57,8 +59,53 @@ public class Library {
      * @return The new created loan.
      */
     public Loan loanABook(String userId, String isbn) {
-        //TODO Implement the login of loan a book to a user based on the UserId and the isbn.
-        return null;
+        // Verificar si el libro existe en la biblioteca
+        if (!books.containsKey(isbn)) {
+            System.out.println("El libro con ISBN " + isbn + " no existe en la biblioteca.");
+            return null;
+        }
+
+        // Verificar si el libro está disponible
+        if (!isBookAvailable(isbn)) {
+            System.out.println("El libro con ISBN " + isbn + " no está disponible.");
+            return null;
+        }
+
+        // Buscar el usuario por su ID
+        User user = users.stream()
+                .filter(u -> u.getId().equals(userId))
+                .findFirst()
+                .orElse(null);
+
+        // Verificar si el usuario existe
+        if (user == null) {
+            System.out.println("El usuario con ID " + userId + " no existe.");
+            return null;
+        }
+
+        // Verificar si el usuario ya tiene un préstamo activo para el mismo libro
+        boolean hasActiveLoan = loans.stream()
+                .anyMatch(loan -> loan.getUser().getId().equals(userId) &&
+                        loan.getBook().getIsbn().equals(isbn) &&
+                        loan.getStatus() == LoanStatus.ACTIVE);
+
+        if (hasActiveLoan) {
+            System.out.println("El usuario ya tiene un préstamo activo para el libro con ISBN " + isbn + ".");
+            return null;
+        }
+
+        // Crear el préstamo
+        Loan loan = new Loan();
+        loan.setBook(books.get(isbn)); // Asignar el libro
+        loan.setUser(user); // Asignar el usuario
+        loan.setStatus(LoanStatus.ACTIVE); // Establecer el estado como ACTIVO
+        loan.setLoanDate(LocalDateTime.now()); // Establecer la fecha de préstamo
+
+        // Agregar el préstamo a la lista de préstamos
+        loans.add(loan);
+
+        // Devolver el préstamo creado
+        return loan;
     }
 
     /**
@@ -71,12 +118,38 @@ public class Library {
      * @return the loan with the RETURNED status.
      */
     public Loan returnLoan(Loan loan) {
-        //TODO Implement the login of loan a book to a user based on the UserId and the isbn.
-        return null;
+        // Verificar si el préstamo existe en la lista de préstamos
+        if (!loans.contains(loan)) {
+            System.out.println("El préstamo no existe en la biblioteca.");
+            return null;
+        }
+
+        // Verificar si el préstamo ya está devuelto
+        if (loan.getStatus() == LoanStatus.RETURNED) {
+            System.out.println("El préstamo ya ha sido devuelto.");
+            return null;
+        }
+
+        // Marcar el préstamo como devuelto
+        loan.setStatus(LoanStatus.RETURNED);
+        loan.setReturnDate(LocalDateTime.now());
+
+        // Devolver el préstamo actualizado
+        return loan;
     }
 
     public boolean addUser(User user) {
         return users.add(user);
+    }
+
+    public boolean isBookAvailable(String isbn) {
+        // Verificar si el libro existe
+        if (!books.containsKey(isbn)) {
+            return false;
+        }
+        // Verificar si hay préstamos activos para este libro
+        return !loans.stream()
+                .anyMatch(loan -> loan.getBook().getIsbn().equals(isbn) && loan.getStatus() == LoanStatus.ACTIVE);
     }
 
 }
