@@ -2,8 +2,10 @@
 
 import edu.eci.cvds.tdd.library.book.Book;
 import edu.eci.cvds.tdd.library.loan.Loan;
+import edu.eci.cvds.tdd.library.loan.LoanStatus;
 import edu.eci.cvds.tdd.library.user.User;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,18 +17,18 @@ import java.util.Map;
 public class Library {
 
     private final List&lt;User&gt; users;
-    private final Map&lt;Book, Integer&gt; books;
+    private final Map&lt;String, Book&gt; books;
     private final List&lt;Loan&gt; loans;
 
-<span class="nc" id="L21">    public Library() {</span>
-<span class="nc" id="L22">        users = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L23">        books = new HashMap&lt;&gt;();</span>
-<span class="nc" id="L24">        loans = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L25">    }</span>
+<span class="fc" id="L23">    public Library() {</span>
+<span class="fc" id="L24">        users = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L25">        books = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L26">        loans = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L27">    }</span>
 
     /**
-     * Adds a new {@link edu.eci.cvds.tdd.library.book.Book} into the system, the book is store in a Map that contains
-     * the {@link edu.eci.cvds.tdd.library.book.Book} and the amount of books available, if the book already exist the
+     * Adds a new {@link Book} into the system, the book is store in a Map that contains
+     * the {@link Book} and the amount of books available, if the book already exist the
      * amount should increase by 1 and if the book is new the amount should be 1, this method returns true if the
      * operation is successful false otherwise.
      *
@@ -35,8 +37,12 @@ public class Library {
      * @return true if the book was stored false otherwise.
      */
     public boolean addBook(Book book) {
-        //TODO Implement the logic to add a new book into the map.
-<span class="nc" id="L39">        return false;</span>
+<span class="fc bfc" id="L40" title="All 2 branches covered.">        if (books.containsKey(book.getIsbn())){</span>
+<span class="fc" id="L41">            System.out.print(&quot;Ya existe un libro con ese Isbn&quot;);</span>
+<span class="fc" id="L42">            return false;</span>
+        }
+<span class="fc" id="L44">        books.put(book.getIsbn(),book);</span>
+<span class="fc" id="L45">        return true;</span>
     }
 
     /**
@@ -53,8 +59,53 @@ public class Library {
      * @return The new created loan.
      */
     public Loan loanABook(String userId, String isbn) {
-        //TODO Implement the login of loan a book to a user based on the UserId and the isbn.
-<span class="nc" id="L57">        return null;</span>
+        // Verificar si el libro existe en la biblioteca
+<span class="fc bfc" id="L63" title="All 2 branches covered.">        if (!books.containsKey(isbn)) {</span>
+<span class="fc" id="L64">            System.out.println(&quot;El libro con ISBN &quot; + isbn + &quot; no existe en la biblioteca.&quot;);</span>
+<span class="fc" id="L65">            return null;</span>
+        }
+
+        // Verificar si el libro está disponible
+<span class="fc bfc" id="L69" title="All 2 branches covered.">        if (!isBookAvailable(isbn)) {</span>
+<span class="fc" id="L70">            System.out.println(&quot;El libro con ISBN &quot; + isbn + &quot; no está disponible.&quot;);</span>
+<span class="fc" id="L71">            return null;</span>
+        }
+
+        // Buscar el usuario por su ID
+<span class="fc" id="L75">        User user = users.stream()</span>
+<span class="fc" id="L76">                .filter(u -&gt; u.getId().equals(userId))</span>
+<span class="fc" id="L77">                .findFirst()</span>
+<span class="fc" id="L78">                .orElse(null);</span>
+
+        // Verificar si el usuario existe
+<span class="fc bfc" id="L81" title="All 2 branches covered.">        if (user == null) {</span>
+<span class="fc" id="L82">            System.out.println(&quot;El usuario con ID &quot; + userId + &quot; no existe.&quot;);</span>
+<span class="fc" id="L83">            return null;</span>
+        }
+
+        // Verificar si el usuario ya tiene un préstamo activo para el mismo libro
+<span class="fc" id="L87">        boolean hasActiveLoan = loans.stream()</span>
+<span class="pc bnc" id="L88" title="All 2 branches missed.">                .anyMatch(loan -&gt; loan.getUser().getId().equals(userId) &amp;&amp;</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">                        loan.getBook().getIsbn().equals(isbn) &amp;&amp;</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">                        loan.getStatus() == LoanStatus.ACTIVE);</span>
+
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">        if (hasActiveLoan) {</span>
+<span class="nc" id="L93">            System.out.println(&quot;El usuario ya tiene un préstamo activo para el libro con ISBN &quot; + isbn + &quot;.&quot;);</span>
+<span class="nc" id="L94">            return null;</span>
+        }
+
+        // Crear el préstamo
+<span class="fc" id="L98">        Loan loan = new Loan();</span>
+<span class="fc" id="L99">        loan.setBook(books.get(isbn)); // Asignar el libro</span>
+<span class="fc" id="L100">        loan.setUser(user); // Asignar el usuario</span>
+<span class="fc" id="L101">        loan.setStatus(LoanStatus.ACTIVE); // Establecer el estado como ACTIVO</span>
+<span class="fc" id="L102">        loan.setLoanDate(LocalDateTime.now()); // Establecer la fecha de préstamo</span>
+
+        // Agregar el préstamo a la lista de préstamos
+<span class="fc" id="L105">        loans.add(loan);</span>
+
+        // Devolver el préstamo creado
+<span class="fc" id="L108">        return loan;</span>
     }
 
     /**
@@ -67,12 +118,38 @@ public class Library {
      * @return the loan with the RETURNED status.
      */
     public Loan returnLoan(Loan loan) {
-        //TODO Implement the login of loan a book to a user based on the UserId and the isbn.
-<span class="nc" id="L71">        return null;</span>
+        // Verificar si el préstamo existe en la lista de préstamos
+<span class="fc bfc" id="L122" title="All 2 branches covered.">        if (!loans.contains(loan)) {</span>
+<span class="fc" id="L123">            System.out.println(&quot;El préstamo no existe en la biblioteca.&quot;);</span>
+<span class="fc" id="L124">            return null;</span>
+        }
+
+        // Verificar si el préstamo ya está devuelto
+<span class="fc bfc" id="L128" title="All 2 branches covered.">        if (loan.getStatus() == LoanStatus.RETURNED) {</span>
+<span class="fc" id="L129">            System.out.println(&quot;El préstamo ya ha sido devuelto.&quot;);</span>
+<span class="fc" id="L130">            return null;</span>
+        }
+
+        // Marcar el préstamo como devuelto
+<span class="fc" id="L134">        loan.setStatus(LoanStatus.RETURNED);</span>
+<span class="fc" id="L135">        loan.setReturnDate(LocalDateTime.now());</span>
+
+        // Devolver el préstamo actualizado
+<span class="fc" id="L138">        return loan;</span>
     }
 
     public boolean addUser(User user) {
-<span class="nc" id="L75">        return users.add(user);</span>
+<span class="fc" id="L142">        return users.add(user);</span>
+    }
+
+    public boolean isBookAvailable(String isbn) {
+        // Verificar si el libro existe
+<span class="fc bfc" id="L147" title="All 2 branches covered.">        if (!books.containsKey(isbn)) {</span>
+<span class="fc" id="L148">            return false;</span>
+        }
+        // Verificar si hay préstamos activos para este libro
+<span class="fc" id="L151">        return !loans.stream()</span>
+<span class="pc bpc" id="L152" title="1 of 6 branches missed.">                .anyMatch(loan -&gt; loan.getBook().getIsbn().equals(isbn) &amp;&amp; loan.getStatus() == LoanStatus.ACTIVE);</span>
     }
 
 }

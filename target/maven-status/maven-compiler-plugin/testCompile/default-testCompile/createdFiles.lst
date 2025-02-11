@@ -1,3 +1,4 @@
-edu\eci\cvds\tdd\library\book\LoanTest.class
 edu\eci\cvds\tdd\library\book\BookTest.class
+edu\eci\cvds\tdd\library\LibraryTest.class
+edu\eci\cvds\tdd\library\book\LoanTest.class
 edu\eci\cvds\tdd\library\book\UserTest.class
