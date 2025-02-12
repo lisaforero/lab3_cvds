@@ -10,26 +10,79 @@ import java.time.LocalDateTime;
 
 public class LoanTest {
 
-    @Test
-    public void testCreateLoan(){
-        Book book1 = new Book("Titulo1","Autor1","ISBM03");
-        User user1 = new User("Juan Perez", "1234");
-        LocalDateTime loanDate = LocalDateTime.parse("2025-02-01 12:30");
-        LoanStatus status = ACTIVE;
-        LocalDateTime returnDate = LocalDateTime.parse("2025-02-05 11:00");
+    private Loan loan;
+    private Book book;
+    private User user;
+    private LoanStatus status;
+    private LocalDateTime now;
 
-        Loan loan1 = new Loan();
-        loan1.setBook(book1);
-        loan1.setUser(user1);
-        loan1.setLoanDate(loanDate);
-        loan1.setStatus(status);
-        loan1.setReturnDate(returnDate);
+    @BeforeEach
+    void setUp() {
+        book = new Book("Clean Code", "Robert Martin", "123456789");
+        user = new User();
+        user.setName("John Perez");
+        user.setId("12345");
+        status = LoanStatus.ACTIVE;
+        now = LocalDateTime.now();
 
-        assertEquals(book1, loan1.getBook());
-        assertEquals(user1, loan1.getUser());
-        assertEquals(loanDate, loan1.getLoanDate());
-        assertEquals(status, loan1.getStatus());
-        assertEquals(returnDate, loan1.getReturnDate());
+        loan = new Loan(book, user, now, status);
     }
 
+    @Test
+    void testSetAndGetBook() {
+        Book newBook = new Book("Java Book", "Autor Desconocido", "987654321");
+
+        loan.setBook(newBook);
+        
+        assertEquals(newBook, loan.getBook());
+    }
+
+    @Test
+    void testSetAndGetUser() {
+        User newUser = new User();
+        newUser.setName("Jane Sanchez");
+        newUser.setId("54321");
+
+        loan.setUser(newUser);
+
+        assertEquals(newUser, loan.getUser());
+    }
+
+    @Test
+    void testSetAndGetLoanDate() {
+        LocalDateTime newLoanDate = now.plusDays(3);
+
+        loan.setLoanDate(newLoanDate);
+
+        assertEquals(newLoanDate, loan.getLoanDate());
+    }
+
+    @Test
+    void testSetAndGetStatus() {
+        LoanStatus newStatus = LoanStatus.RETURNED;
+
+        loan.setStatus(newStatus);
+
+        assertEquals(newStatus, loan.getStatus());
+    }
+
+    @Test
+    void testSetAndGetReturnDate() {
+        LocalDateTime returnDate = now.plusDays(5);
+
+        loan.setReturnDate(returnDate);
+
+        assertEquals(returnDate, loan.getReturnDate());
+    }
+
+    @Test
+    void testBookEquals() {
+        Book sameBook = new Book("Clean Code", "Robert Martin", "123456789");
+
+        assertEquals(book, sameBook);
+
+        Book differentBook = new Book("Nuevo Libro", "Nuevo Autor", "97654321");
+
+        assertNotEquals(book, differentBook);
+    }
 }
