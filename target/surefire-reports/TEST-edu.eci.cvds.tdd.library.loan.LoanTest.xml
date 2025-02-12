@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="edu.eci.cvds.tdd.library.LibraryTest" time="0.073" tests="15" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="edu.eci.cvds.tdd.library.loan.LoanTest" time="0.046" tests="6" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="17"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -56,42 +56,10 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="61.0"/>
   </properties>
-  <testcase name="testLoanABook" classname="edu.eci.cvds.tdd.library.LibraryTest" time="0.029"/>
-  <testcase name="testLoanABookWithUnavailableBook" classname="edu.eci.cvds.tdd.library.LibraryTest" time="0.005">
-    <system-out><![CDATA[El libro con ISBN ISBM01 no estÃ¡ disponible.
-]]></system-out>
-  </testcase>
-  <testcase name="testAddUser" classname="edu.eci.cvds.tdd.library.LibraryTest" time="0.002"/>
-  <testcase name="testReturnLoanWithInvalidLoan" classname="edu.eci.cvds.tdd.library.LibraryTest" time="0.002">
-    <system-out><![CDATA[El prÃ©stamo no existe en la biblioteca.
-]]></system-out>
-  </testcase>
-  <testcase name="testLoanABookWithInvalidUser" classname="edu.eci.cvds.tdd.library.LibraryTest" time="0.001">
-    <system-out><![CDATA[El usuario con ID 999 no existe.
-]]></system-out>
-  </testcase>
-  <testcase name="testReturnLoan_LoanAlreadyReturned" classname="edu.eci.cvds.tdd.library.LibraryTest" time="0.002">
-    <system-out><![CDATA[El prÃ©stamo ya ha sido devuelto.
-]]></system-out>
-  </testcase>
-  <testcase name="testLoanABook_BookDoesNotExist" classname="edu.eci.cvds.tdd.library.LibraryTest" time="0.003">
-    <system-out><![CDATA[El libro con ISBN NonExistingISBN no existe en la biblioteca.
-]]></system-out>
-  </testcase>
-  <testcase name="testReturnLoan_LoanDoesNotExist" classname="edu.eci.cvds.tdd.library.LibraryTest" time="0.002">
-    <system-out><![CDATA[El prÃ©stamo no existe en la biblioteca.
-]]></system-out>
-  </testcase>
-  <testcase name="testIsBookAvailable_BookDoesNotExist" classname="edu.eci.cvds.tdd.library.LibraryTest" time="0.001"/>
-  <testcase name="testTrueAddBook" classname="edu.eci.cvds.tdd.library.LibraryTest" time="0.002"/>
-  <testcase name="testReturnLoan" classname="edu.eci.cvds.tdd.library.LibraryTest" time="0.001"/>
-  <testcase name="testLoanABook_UserAlreadyHasActiveLoanForSameBook" classname="edu.eci.cvds.tdd.library.LibraryTest" time="0.001">
-    <system-out><![CDATA[El libro con ISBN ISBM01 no estÃ¡ disponible.
-]]></system-out>
-  </testcase>
-  <testcase name="testIsBookAvailable_BookIsNotAvailable" classname="edu.eci.cvds.tdd.library.LibraryTest" time="0.001"/>
-  <testcase name="testIsBookAvailable_BookIsAvailable" classname="edu.eci.cvds.tdd.library.LibraryTest" time="0.003"/>
-  <testcase name="testFalseAddBook" classname="edu.eci.cvds.tdd.library.LibraryTest" time="0.001">
-    <system-out><![CDATA[Ya existe un libro con ese Isbn]]></system-out>
-  </testcase>
+  <testcase name="testSetAndGetStatus" classname="edu.eci.cvds.tdd.library.loan.LoanTest" time="0.002"/>
+  <testcase name="testSetAndGetLoanDate" classname="edu.eci.cvds.tdd.library.loan.LoanTest" time="0.002"/>
+  <testcase name="testSetAndGetReturnDate" classname="edu.eci.cvds.tdd.library.loan.LoanTest" time="0.002"/>
+  <testcase name="testSetAndGetBook" classname="edu.eci.cvds.tdd.library.loan.LoanTest" time="0.005"/>
+  <testcase name="testSetAndGetUser" classname="edu.eci.cvds.tdd.library.loan.LoanTest" time="0.003"/>
+  <testcase name="testBookEquals" classname="edu.eci.cvds.tdd.library.loan.LoanTest" time="0.007"/>
 </testsuite>

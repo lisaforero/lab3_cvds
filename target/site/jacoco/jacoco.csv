@@ -2,5 +2,5 @@ GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_
 Library,edu.eci.cvds.tdd.library,Library,34,208,8,20,4,47,6,17,1,8
 Library,edu.eci.cvds.tdd.library.book,Book,0,28,0,0,0,9,0,5,0,5
 Library,edu.eci.cvds.tdd.library.loan,LoanStatus,0,15,0,0,0,2,0,1,0,1
-Library,edu.eci.cvds.tdd.library.loan,Loan,7,35,0,0,2,15,2,10,2,10
-Library,edu.eci.cvds.tdd.library.user,User,3,14,0,0,1,6,1,4,1,4
+Library,edu.eci.cvds.tdd.library.loan,Loan,4,56,0,0,1,23,1,12,1,12
+Library,edu.eci.cvds.tdd.library.user,User,0,23,0,0,0,10,0,5,0,5

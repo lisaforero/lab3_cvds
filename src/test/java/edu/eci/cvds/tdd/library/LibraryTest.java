@@ -24,12 +24,9 @@ public class LibraryTest {
         book2 = new Book("Titulo2", "Autor2", "ISBM02");
         book3 = new Book("Titulo3", "Autor3", "ISBM02");
 
-        user1 = new User();
-        user1.setId("123");
-        user1.setName("Usuario1");
-        user2 = new User();
-        user2.setId("456");
-        user2.setName("Usuario2");
+        user1 = new User("Usuario1","123");
+        user2 = new User("Usuario2","456");
+
 
         library.addUser(user1);
         library.addUser(user2);
@@ -153,9 +150,7 @@ public class LibraryTest {
 
     @Test
     public void testAddUser() {
-        User newUser = new User();
-        newUser.setId("789");
-        newUser.setName("Usuario3");
+        User newUser = new User("Usuario3","789");
         assertTrue(library.addUser(newUser));
     }
 
